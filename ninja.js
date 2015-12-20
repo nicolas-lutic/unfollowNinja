@@ -23,7 +23,12 @@ var ripemd = require("crypto-js/ripemd160"); //cryptage (pour génerer l'api key
 //déclaration des schémas et modèles de mongoose (gestion de mongoDB)
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.connect(config.mongoDB);
+var connectionOK = mongoose.connect(config.mongoDB);
+mongoose.connection.on('error', function (err) {
+  console.error("Il faut demarrer mongod".red.bgWhite);
+  process.exit(err.code);
+});
+
 var twitterUser={id:String, username:String, photo:String, token:String, secret:String};
 var userSchema = new Schema({ username: String, twitter: twitterUser, twitterDM: twitterUser, followers: [{id: String, since:{ type: Date, default: Date.now }}], unfollowers: [{id: String, since: Date, until:{ type: Date, default: Date.now }}] });
 
