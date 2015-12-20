@@ -23,7 +23,7 @@ var ripemd = require("crypto-js/ripemd160"); //cryptage (pour génerer l'api key
 //déclaration des schémas et modèles de mongoose (gestion de mongoDB)
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var connectionOK = mongoose.connect(config.mongoDB);
+mongoose.connect(config.mongoDB);
 mongoose.connection.on('error', function (err) {
   console.error("Il faut demarrer mongod".red.bgWhite);
   process.exit(err.code);
